@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.models.user;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

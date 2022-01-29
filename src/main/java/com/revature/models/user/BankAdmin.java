@@ -1,35 +1,36 @@
-package com.revature.models;
+package com.revature.models.user;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Employee extends Person{
+public class BankAdmin extends Person{
 
     SimpleDateFormat dateFormat =  new SimpleDateFormat("MM/dd/yyyy");
 
-    private int employeeID;
+    private int bankAdminID;
     private String dateEmployed;
 
     //No arg constructor, calls parent constructor
-    public Employee() {
+    public BankAdmin() {
         super();
-        this.employeeID = 0;
+        this.bankAdminID = 0;
         Date currentDate = new Date();
         this.dateEmployed = dateFormat.format(currentDate).toString();
     }
 
-    public Employee(String firstName, String lastName, String email, int employeeID) {
+    public BankAdmin(String firstName, String lastName, String email, int bankAdminID) {
         super(firstName, lastName, email);
-        this.employeeID = employeeID;
+        this.bankAdminID = bankAdminID;
         Date currentDate = new Date();
         this.dateEmployed = dateFormat.format(currentDate).toString();
     }
 
-    public int getEmployeeID() {
-        return employeeID;
+    public int getBankAdminID() {
+        return bankAdminID;
     }
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
+    public void setBankAdminID(int employeeID) {
+        this.bankAdminID = employeeID;
     }
 
     public String getDateEmployed() {
@@ -40,3 +41,4 @@ public class Employee extends Person{
         this.dateEmployed = dateEmployed;
     }
 }
+

@@ -1,4 +1,6 @@
-package com.revature.models;
+package com.revature.models.account;
+
+import com.revature.models.account.Account;
 
 public class CustomerAccount extends Account {
 
