@@ -1,4 +1,5 @@
 package com.revature.models.user;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -8,6 +9,7 @@ public class Customer extends Person{
 
     private int customerID;
     private String dateJoin;
+    private UserType type = UserType.CUSTOMER;
 
     //No arg constructor, calls parent constructor
     public Customer() {
@@ -39,6 +41,17 @@ public class Customer extends Person{
 
     public void setCustomerID(int customerID) {
         this.customerID = customerID;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerID=" + customerID +
+                ", firstName=" + this.getFirstName() +
+                ", lastName=" + this.getLastName() +
+                ", email=" + this.getEmail() +
+                ", dateJoin=" + dateJoin +
+                '}';
     }
 
 }

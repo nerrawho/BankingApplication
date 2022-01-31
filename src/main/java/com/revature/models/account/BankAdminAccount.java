@@ -4,7 +4,7 @@ import com.revature.models.account.Account;
 
 public class BankAdminAccount extends Account {
 
-    private final byte accessLevel = 1;
+    private AccountType type = AccountType.ADMIN;
 
     public BankAdminAccount() {
         super();
@@ -15,8 +15,4 @@ public class BankAdminAccount extends Account {
     }
 
     //Mutators
-
-    public byte getAccessLevel() {
-        return accessLevel;
-    }
 }

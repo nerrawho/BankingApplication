@@ -4,7 +4,7 @@ import com.revature.models.account.Account;
 
 public class EmployeeAccount extends Account {
 
-    private final byte accessLevel = 0;
+    private AccountType type = AccountType.EMPLOYEE;
 
     public EmployeeAccount() {
         super();
@@ -15,8 +15,4 @@ public class EmployeeAccount extends Account {
     }
 
     //Mutators
-
-    public byte getAccessLevel() {
-        return accessLevel;
-    }
 }

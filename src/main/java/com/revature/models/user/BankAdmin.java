@@ -9,6 +9,7 @@ public class BankAdmin extends Person{
 
     private int bankAdminID;
     private String dateEmployed;
+    private UserType type = UserType.ADMIN;
 
     //No arg constructor, calls parent constructor
     public BankAdmin() {
@@ -39,6 +40,17 @@ public class BankAdmin extends Person{
 
     public void setDateEmployed(String dateEmployed) {
         this.dateEmployed = dateEmployed;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "bankAdminID=" + bankAdminID +
+                ", firstName=" + this.getFirstName() +
+                ", lastName=" + this.getLastName() +
+                ", email=" + this.getEmail() +
+                ", dateEmployed=" + dateEmployed +
+                '}';
     }
 }
 
