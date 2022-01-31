@@ -14,14 +14,12 @@ public class Customer extends Person{
     //No arg constructor, calls parent constructor
     public Customer() {
         super();
-        this.customerID = 0;
         Date currentDate = new Date();
         this.dateJoin = dateFormat.format(currentDate).toString();
     }
 
-    public Customer(String firstName, String lastName, String email, int customerID) {
+    public Customer(String firstName, String lastName, String email) {
         super(firstName, lastName, email);
-        this.customerID = customerID;
         Date currentDate = new Date();
         this.dateJoin = dateFormat.format(currentDate).toString();
     }
