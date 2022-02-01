@@ -15,8 +15,8 @@ public class ConnectionUtil {
         }
 
         String url = "jdbc:postgresql://35.193.162.63:5432/postgres";
-        String username = "postgres";
-        String password = "Deltawarp711";
+        String username = System.getenv("DB_USER");
+        String password = System.getenv("DB_PASSWORD");
         return DriverManager.getConnection(url, username, password);
     }
 }
