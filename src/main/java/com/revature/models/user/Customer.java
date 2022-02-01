@@ -33,6 +33,14 @@ public class Customer extends Person{
     }
 //Mutators
 
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
     public int getCustomerID() {
         return customerID;
     }

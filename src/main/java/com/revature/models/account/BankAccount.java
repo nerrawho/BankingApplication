@@ -4,6 +4,7 @@ public class BankAccount {
 
     private long bankAccountID;
     private double balance;
+    private AccountType type = AccountType.BANK;
 
 
     public BankAccount() {

@@ -16,4 +16,11 @@ public class CustomerAccount extends Account {
 
     //Mutators
 
+    public AccountType getType() {
+        return type;
+    }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
 }
