@@ -5,4 +5,5 @@ public enum AccountType {
     EMPLOYEE,
     ADMIN,
     BANK,
+    PENDING
 }

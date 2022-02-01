@@ -17,8 +17,8 @@ public class CustomerService {
         return ca;
     }
 
-    public PendingAccount applyBankAccount(double balance) {
-        PendingAccount pa = new PendingAccount(balance);
+    public PendingAccount applyBankAccount(long pendingAccountID, long userAccountID, double balance) {
+        PendingAccount pa = new PendingAccount(pendingAccountID, userAccountID, balance);
         return pa;
     }
 
