@@ -72,6 +72,17 @@ public class BankAppDriver {
             ctx.json(c1);
         });
 
+        //Approve Bank Account
+        app.post("/employee/approve", ctx -> {
+            CustomerAccount ca3 = ctx.bodyAsClass(CustomerAccount.class);
+            boolean success = employee.approveBankAccount(ca3);
+
+            if(success)
+                ctx.status(201);
+            else
+                ctx.status(400);
+        });
+
 
         //-------Customer-------
         //View account balance
@@ -115,26 +126,17 @@ public class BankAppDriver {
                 ctx.status(400);
         });
 
-        //Apply for bank account
+        //withdraw
         app.post("/customer/withdraw", ctx -> {
             Transaction t1 = ctx.bodyAsClass(Transaction.class);
-            boolean success = customer.applyBankAccount(t1);
+            customer.withdraw(t1);
 
-            if(success)
-                ctx.status(201);
-            else
-                ctx.status(400);
         });
 
-        //Apply for bank account
-        app.put("/customer/deposit", ctx -> {
+        //Deposit
+        app.post("/customer/deposit", ctx -> {
             Transaction t1 = ctx.bodyAsClass(Transaction.class);
-            boolean success = customer.applyBankAccount(t1);
-
-            if(success)
-                ctx.status(201);
-            else
-                ctx.status(400);
+            customer.deposit(t1);
         });
 
     }

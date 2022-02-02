@@ -274,7 +274,7 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
 
     @Override
     public List<Employee> viewEmployees() {
-        String sql = "select * from person where user_type = 1 and user_type = 2";
+        String sql = "select * from person where user_type = 1";
 
         List<Employee> employeeList = new ArrayList<>();
 

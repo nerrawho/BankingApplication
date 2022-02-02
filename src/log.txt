@@ -1,1 +1,7 @@
 2022-02-02 00:45:06 INFO  BankAppDriver:22 - Start of setUp
+2022-02-02 03:31:37 INFO  BankAppDriver:23 - Start of Application
+2022-02-02 03:39:27 INFO  BankAppDriver:23 - Start of Application
+2022-02-02 04:00:04 INFO  BankAppDriver:23 - Start of Application
+2022-02-02 04:10:51 INFO  BankAppDriver:23 - Start of Application
+2022-02-02 04:15:58 INFO  BankAppDriver:23 - Start of Application
+2022-02-02 04:28:41 INFO  BankAppDriver:23 - Start of Application
