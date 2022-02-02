@@ -10,8 +10,8 @@ public class EmployeeAccount extends Account {
         super();
     }
 
-    public EmployeeAccount(String username, String password) {
-        super(username, password);
+    public EmployeeAccount(String username, String password, String email) {
+        super(username, password, email);
     }
 
     //Mutators

@@ -1,11 +1,14 @@
 package com.revature.daos;
 
+import com.revature.BankAppDriver;
 import com.revature.models.account.BankAccount;
 import com.revature.models.account.CustomerAccount;
 import com.revature.models.account.PendingAccount;
 import com.revature.models.user.Customer;
 import com.revature.models.user.Employee;
 import com.revature.utils.ConnectionUtil;
+import com.revature.utils.Transaction;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,12 +17,36 @@ import java.util.List;
 public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
 
     @Override
-    public boolean registerUserAccount(Customer customer, CustomerAccount ca) {
+    public boolean registerEmployee(Employee employee) {
         String sql1 = "insert into person (first, last, user_type, email, date_join) values (?, ?, ?, ?, ?)";
-        String sql2 = "insert into account (user_id, username, password, account_type) values ((select id from person where email = '" + customer.getEmail() + "'), ?, ?, ?)";
         try (Connection connect = ConnectionUtil.getConnection();
-             PreparedStatement ps1 = connect.prepareStatement(sql1);
-             PreparedStatement ps2 = connect.prepareStatement(sql2);) {
+             PreparedStatement ps1 = connect.prepareStatement(sql1);) {
+
+            //Insert into person
+            ps1.setString(1, employee.getFirstName());
+            ps1.setString(2, employee.getLastName());
+            ps1.setInt(3, employee.getType().ordinal());
+            ps1.setString(4, employee.getEmail());
+            ps1.setString(5, employee.getDateEmployed());
+
+
+            int rowsAffectedPerson = ps1.executeUpdate();
+
+            if(rowsAffectedPerson == 1)
+                return true;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean registerUser(Customer customer) {
+        String sql1 = "insert into person (first, last, user_type, email, date_join) values (?, ?, ?, ?, ?)";
+        try (Connection connect = ConnectionUtil.getConnection();
+             PreparedStatement ps1 = connect.prepareStatement(sql1);) {
 
             //Insert into person
             ps1.setString(1, customer.getFirstName());
@@ -29,15 +56,33 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
             ps1.setString(5, customer.getDateJoin());
 
 
+            int rowsAffectedPerson = ps1.executeUpdate();
+
+            if(rowsAffectedPerson == 1)
+                return true;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean registerUserAccount(CustomerAccount ca) {
+        String sql2 = "insert into account (user_id, username, password, account_type, email) values ((select id from person where person.email = '" + ca.getEmail() + "'), ?, ?, ?, ?)";
+        try (Connection connect = ConnectionUtil.getConnection();
+             PreparedStatement ps2 = connect.prepareStatement(sql2);) {
+
             //Insert into account
             ps2.setString(1, ca.getUsername());
             ps2.setString(2, ca.getPassword());
             ps2.setInt(3, ca.getType().ordinal());
+            ps2.setString(4, ca.getEmail());
 
-            int rowsAffectedPerson = ps1.executeUpdate();
             int rowsAffectedAccount = ps2.executeUpdate();
 
-            if(rowsAffectedAccount == 1 && rowsAffectedPerson == 1)
+            if(rowsAffectedAccount == 1)
                 return true;
 
         } catch (SQLException e){
@@ -49,12 +94,12 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
 
 
     @Override
-    public boolean applyBankAccount(CustomerAccount ca, double balance) {
-        String sql = "insert into pending_approval(user_account, balance) values ((select id from account where username = '" + ca.getUsername() + "'), ?)";
+    public boolean applyBankAccount(Transaction t) {
+        String sql = "insert into pending_approval(user_account, balance) values ((select id from account where username = '" + t.getUsername() + "'), ?)";
         try (Connection connect = ConnectionUtil.getConnection();
              PreparedStatement ps = connect.prepareStatement(sql);) {
 
-            ps.setDouble(1, balance);
+            ps.setDouble(1, t.getBalance());
 
             int rowsAffectedPending = ps.executeUpdate();
             if(rowsAffectedPending == 1)
@@ -87,7 +132,7 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
     }
 
     @Override
-    public boolean deposit(CustomerAccount ca, double balance) {
+    public boolean deposit(Transaction t) {
 
         double newBalance= 0.0;
         double existingBalance = 0.0;
@@ -105,7 +150,7 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
         }
 
         if(existingBalance != 0)
-            newBalance = existingBalance + balance;
+            newBalance = existingBalance + t.getBalance();
         else
             newBalance = existingBalance;
 
@@ -127,7 +172,7 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
     }
 
     @Override
-    public boolean withdraw(CustomerAccount ca, double balance) {
+    public boolean withdraw(Transaction t) {
 
         double newBalance= 0.0;
         double existingBalance = 0.0;
@@ -145,7 +190,7 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
         }
 
         if(existingBalance != 0)
-            newBalance = existingBalance - balance;
+            newBalance = existingBalance - t.getBalance();
         else
             newBalance = existingBalance;
 
@@ -229,7 +274,7 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
 
     @Override
     public List<Employee> viewEmployees() {
-        String sql = "select * from person where type = 1 and type = 2";
+        String sql = "select * from person where user_type = 1 and user_type = 2";
 
         List<Employee> employeeList = new ArrayList<>();
 
@@ -252,7 +297,7 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
                 String email = rs.getString("email");
                 e.setEmail(email);
 
-                String date = rs.getString("date");
+                String date = rs.getString("date_join");
                 e.setDateEmployed(date);
 
                 employeeList.add(e);
@@ -265,7 +310,7 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
     }
 
     @Override
-    public void deleteAccount(Customer cu) {
+    public boolean deleteAccount(Customer cu) {
 
         String email = cu.getEmail();
         String sql1 = "delete from bank_account using person, account where bank_account.user_account = account.id and account.user_id = person.id and person.email = '" + email + "'";
@@ -281,14 +326,17 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
             ps2.executeUpdate();
             ps3.executeUpdate();
 
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override
     public List<Customer> viewAllCustomer() {
-        String sql = "select * from person where type = 0";
+        String sql = "select * from person where user_type = 0";
 
         List<Customer> customerList = new ArrayList<>();
 
@@ -311,7 +359,7 @@ public class DaoImplement implements CustomerDao, EmployeeDao, BankAdminDao{
                 String email = rs.getString("email");
                 c.setEmail(email);
 
-                String date = rs.getString("date");
+                String date = rs.getString("date_join");
                 c.setDateJoin(date);
 
                 customerList.add(c);

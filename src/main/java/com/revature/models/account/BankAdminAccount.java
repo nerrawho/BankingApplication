@@ -10,8 +10,8 @@ public class BankAdminAccount extends Account {
         super();
     }
 
-    public BankAdminAccount(String username, String password) {
-        super(username, password);
+    public BankAdminAccount(String username, String password, String email) {
+        super(username, password, email);
     }
 
     //Mutators

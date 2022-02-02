@@ -10,8 +10,8 @@ public class CustomerAccount extends Account {
         super();
     }
 
-    public CustomerAccount(String username, String password) {
-        super(username, password);
+    public CustomerAccount(String username, String password, String email) {
+        super(username, password, email);
     }
 
     //Mutators

@@ -12,8 +12,8 @@ public class CustomerService {
         return customer;
     }
 
-    public CustomerAccount createCustomerAccount(String username, String password) {
-        CustomerAccount ca = new CustomerAccount(username, password);
+    public CustomerAccount createCustomerAccount(String username, String password, String email) {
+        CustomerAccount ca = new CustomerAccount(username, password, email);
         return ca;
     }
 

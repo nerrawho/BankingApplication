@@ -38,6 +38,14 @@ public class BankAdmin extends Person{
         return dateEmployed;
     }
 
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
     public void setDateEmployed(String dateEmployed) {
         this.dateEmployed = dateEmployed;
     }

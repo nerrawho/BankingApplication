@@ -42,6 +42,14 @@ public class Employee extends Person{
         this.dateEmployed = dateEmployed;
     }
 
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +

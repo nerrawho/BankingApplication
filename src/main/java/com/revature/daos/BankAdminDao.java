@@ -8,5 +8,6 @@ import java.util.List;
 public interface BankAdminDao extends EmployeeDao{
 
     public List<Employee> viewEmployees();
-    public void deleteAccount(Customer cu);
+    public boolean registerEmployee(Employee employee);
+    public boolean deleteAccount(Customer cu);
 }
