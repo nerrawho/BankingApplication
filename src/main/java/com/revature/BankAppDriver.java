@@ -43,11 +43,14 @@ public class BankAppDriver {
                 ctx.status(400);
         });
 
+        //View all employee
         app.get("/bank-admin/all-employee", ctx -> {
             List<Employee> empList = bankAdmin.viewEmployees();
             ctx.json(empList);
         });
 
+
+        //Delete account
         app.delete("/bank-admin", ctx -> {
             Customer c = ctx.bodyAsClass(Customer.class);
             boolean success = bankAdmin.deleteAccount(c);
